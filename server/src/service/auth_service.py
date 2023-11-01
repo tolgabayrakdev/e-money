@@ -3,6 +3,7 @@ from model import User
 from util.helper import Helper
 from sqlalchemy.exc import SQLAlchemyError
 from fastapi import HTTPException
+from schema.user import RegisterUser
 
 db = SessionLocal()
 
@@ -18,7 +19,7 @@ class AuthService:
         return {"access_token": access_token, "refresh_token": refresh_token}
 
     @staticmethod
-    def register(payload: User):
+    def register(payload: RegisterUser):
         try:
             user = User(
                 username=payload.username,

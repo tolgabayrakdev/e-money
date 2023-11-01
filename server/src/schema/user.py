@@ -10,3 +10,8 @@ class RegisterUser(BaseModel):
     username: str
     email: str
     password: str
+
+
+class UserRegisterResponse(BaseModel):
+    username: str
+    email: str
