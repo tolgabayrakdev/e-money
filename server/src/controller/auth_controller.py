@@ -1,7 +1,7 @@
 import jwt
 from fastapi import Response, Request, HTTPException, APIRouter
-from service.auth_service import AuthService
-from schema.user import LoginUser, RegisterUser, UserRegisterResponse
+from ..service.auth_service import AuthService
+from ..schema.user import LoginUser, RegisterUser, UserRegisterResponse
 
 auth_router = APIRouter()
 

@@ -1,6 +1,6 @@
 from fastapi import Request, HTTPException
-from database import SessionLocal
-from model import User
+from ..database import SessionLocal
+from ..model import User
 import jwt
 
 
