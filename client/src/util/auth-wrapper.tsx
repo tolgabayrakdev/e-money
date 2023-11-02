@@ -1,4 +1,5 @@
 "use client"
+import Link from "next/link";
 import { useEffect, useState } from "react"
 
 function AuthWrapper(WrapperComponent: any) {
@@ -11,7 +12,7 @@ function AuthWrapper(WrapperComponent: any) {
         useEffect(() => {
             const verifyToken = async () => {
                 try {
-                    const res = await fetch("", {
+                    const res = await fetch("http://127.0.0.1:8000/api/v1/auth/verify", {
                         method: "POST",
                         credentials: "include"
                     });
@@ -21,6 +22,9 @@ function AuthWrapper(WrapperComponent: any) {
                     }else if (res.status === 401) {
                         setLoading(false);
                         setSessionExpired(true);
+                    } else{
+                        setLoading(false)
+                        setAccessDenied(true);
                     }
                 } catch (error) {
                     setAccessDenied(true);
@@ -32,20 +36,17 @@ function AuthWrapper(WrapperComponent: any) {
 
 
         if (loading) {
-            return(<section>Loading...</section>)
+            return(<section className="flex h-screen justify-center items-center text-xl text-blue-600">Loading...</section>)
         }
         if (accessDenied) {
-            return(<section>Access denied!</section>)
+            return(<section className="flex flex-col h-screen justify-center items-center text-xl text-red-600">Access denied! <Link className=" hover:underline text-blue-600 text-sm" href="/">Go home</Link> </section>)
         }
         if (sessionExpired) {
-            return(<section>Sorry, your session has expired.</section>)
+            return(<section className="flex h-screen justify-center items-center text-xl">Sorry, your session has expired.</section>)
         }
-
         return(<section><WrapperComponent {...props}/> </section>)
-
     }
     return Wrapper;
-
 }
 
 export default AuthWrapper;

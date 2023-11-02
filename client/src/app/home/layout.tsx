@@ -1,18 +1,19 @@
 "use client"
-import { Inter } from 'next/font/google'
-const inter = Inter({ subsets: ['latin'] })
+import AuthWrapper from "@/util/auth-wrapper";
 
-export default function HomeLayout({
+function HomeLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <h1 className=" text-4xl">Home Layout!</h1>
         {children}
         </body>
     </html>
   )
 }
+
+export default AuthWrapper(HomeLayout);
