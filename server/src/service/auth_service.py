@@ -34,3 +34,10 @@ class AuthService:
             db.rollback()
             raise HTTPException(status_code=500, detail=str(e))
 
+    @staticmethod
+    def user_information(id: int):
+        user = db.query(User).filter_by(id=id).first()
+        if user:
+            return user
+        else:
+            return False
