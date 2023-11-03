@@ -1,9 +1,34 @@
 "use client"
 import Link from "next/link";
-import { useState } from "react"
+import { FormEvent, useState } from "react"
 
 export default function Home() {
   const [changeVisible, setChangeVisible] = useState(false);
+
+  // Register.
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+
+  const handleRegister = async (e: FormEvent) => {
+    e.preventDefault();
+    try {
+      const res = await fetch("http://localhost:8000/api/v1/register", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, email, password })
+      })
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+
+
   return (
     <main>
       <div className="h-screen flex justify-center flex-col items-center">
@@ -24,12 +49,12 @@ export default function Home() {
 
               </form>
               :
-              <form>
+              <form onSubmit={handleRegister}>
                 <div className="flex flex-col">
                   <h4 className="text-center text-blue-600 mb-1">Register here</h4>
-                  <input type="text" name="username" id="useranem" placeholder="Username" className=" border-2 p-1 rounded-md border-blue-400 mb-1" />
-                  <input type="email" name="email" id="email" placeholder="Email" className=" border-2 p-1 rounded-md border-blue-400 mb-1" />
-                  <input type="password" name="password" id="password" placeholder="Password" className=" border-2 p-1 rounded-md border-blue-400" />
+                  <input onChange={(e) => setUsername(e.target.value)} type="text" name="username" id="useranem" placeholder="Username" className=" border-2 p-1 rounded-md border-blue-400 mb-1" />
+                  <input onChange={(e) => setEmail(e.target.value)} type="email" name="email" id="email" placeholder="Email" className=" border-2 p-1 rounded-md border-blue-400 mb-1" />
+                  <input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="password" placeholder="Password" className=" border-2 p-1 rounded-md border-blue-400" />
                   <button type="submit" className="border mt-3 rounded-md border-blue-500 p-1 bg-blue-500 text-white">Register</button>
                 </div>
               </form>
