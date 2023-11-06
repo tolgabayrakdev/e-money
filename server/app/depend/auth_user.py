@@ -4,15 +4,14 @@ from ..model import User
 import jwt
 
 
-async def auth_middleware(request: Request):
+async def auth_user(request: Request):
     # HTTP taleplerinden access tokenı alıyoruz
     access_token = request.cookies.get("access_token")
     if access_token:
         # Token varsa, kullanıcı kimliğini doğrulayalım
         try:
             payload = jwt.decode(access_token, "secret_key", algorithms=["HS256"])
-            print(payload)
-            user_id = int(payload.get("payload"))
+            user_id = (payload["payload"]["user_id"])
             db = SessionLocal()
             user = db.query(User).filter(User.id == user_id).first()
             if not user:
