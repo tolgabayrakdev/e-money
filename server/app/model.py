@@ -27,6 +27,15 @@ class Account(Base):
     id = Column(Integer, primary_key=True, index=True)
     balance = Column(Float, default=0)
     user_id = Column(Integer, ForeignKey("users.id"))
+    account_type_id = Column(Integer, ForeignKey("account_types.id"))
+    created_at = Column(DateTime, default=datetime.now())
+    updated_at = Column(DateTime, default=datetime.now(), onupdate=datetime.now())
+
+
+class AccountType(Base):
+    __tablename__ = "account_types"
+    id = Column(Integer, primary_key=True, index=True)
+    type = Column(String(50))
     created_at = Column(DateTime, default=datetime.now())
     updated_at = Column(DateTime, default=datetime.now(), onupdate=datetime.now())
 
@@ -34,10 +43,7 @@ class Account(Base):
 class Transaction(Base):
     __tablename__ = "transactions"
     id = Column(Integer, primary_key=True, index=True)
-    account_id = Column(Integer, ForeignKey("accounts.id"))
-    user_id = Column(Integer, ForeignKey("users.id"))
+    source_account_id = Column(Integer, ForeignKey("accounts.id"))
+    target_account_id = Column(Integer, ForeignKey("accounts.id"))
     amount = Column(Float)
-    created_at = Column(DateTime, default=datetime.now())
-
-
-
+    transaction_date = Column(DateTime, default=datetime.now())

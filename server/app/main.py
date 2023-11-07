@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.controller import auth_controller, account_controller
+from app.controller import auth_controller, account_controller, transaction_controller
 from .model import Base
 from .database import engine
 
@@ -29,3 +29,4 @@ async def index():
 
 app.include_router(router=auth_controller.auth_router, prefix="/api/v1/auth")
 app.include_router(router=account_controller.account_router, prefix="/api/v1/account")
+app.include_router(router=transaction_controller.transaction_router, prefix="/api/v1/transaction")
