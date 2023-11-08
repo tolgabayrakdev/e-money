@@ -21,9 +21,16 @@ async def create_account(
 @account_router.delete("/{id}")
 async def delete_account(id: int):
     AccountService.delete(id=id)
-    return {"message": "Account deleted with id"}
+    return {"message": "Account deleted successful."}
 
 
 @account_router.get("/{id}")
 async def show_account(id: int):
     return AccountService.show(id)
+
+
+@account_router.get("/")
+async def list_account(
+        user: Annotated[User, Depends(auth_user)]
+):
+    return AccountService.list_by_user(user_id=user.id)

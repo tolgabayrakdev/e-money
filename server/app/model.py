@@ -1,6 +1,7 @@
 from datetime import datetime
-from sqlalchemy import ForeignKey, Column, Integer, String, DateTime, Float
+from sqlalchemy import ForeignKey, Column, Integer, String, DateTime, Float, UUID
 from .database import Base
+import uuid
 
 
 class User(Base):
@@ -24,7 +25,7 @@ class Role(Base):
 
 class Account(Base):
     __tablename__ = "accounts"
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(UUID(as_uuid=True), primary_key=True, index=True, default=uuid.uuid4())
     balance = Column(Float, default=0)
     user_id = Column(Integer, ForeignKey("users.id"))
     account_type_id = Column(Integer, ForeignKey("account_types.id"))

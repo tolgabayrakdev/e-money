@@ -22,6 +22,7 @@ class AccountService:
             return {"message": "Account created."}
         except SQLAlchemyError as e:
             db.rollback()
+            print(e)
             raise HTTPException(status_code=500, detail=str(e))
 
     @staticmethod
