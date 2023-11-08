@@ -2,5 +2,4 @@ from pydantic import BaseModel
 
 
 class CreateAccount(BaseModel):
-    balance: float
-    user_id: int
+    account_type_id: int

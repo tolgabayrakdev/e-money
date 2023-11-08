@@ -10,15 +10,16 @@ db = SessionLocal()
 class AccountService:
 
     @staticmethod
-    def create(data: CreateAccount):
+    def create(user_id: int, account_type_id: int):
         try:
             account = Account(
                 balance=0,
-                user_id=data.user_id
+                user_id=user_id,
+                account_type_id=account_type_id
             )
             db.add(account)
             db.commit()
-            return account
+            return {"message": "Account created."}
         except SQLAlchemyError as e:
             db.rollback()
             raise HTTPException(status_code=500, detail=str(e))
@@ -31,4 +32,22 @@ class AccountService:
             db.commit()
         except SQLAlchemyError as e:
             db.rollback()
+            raise HTTPException(status_code=500, detail=str(e))
+
+    @staticmethod
+    def show(id: int):
+        try:
+            account = db.query(Account).filter_by(id=id).first()
+            if not account:
+                raise HTTPException(status_code=404, detail="Account not found!")
+            return account
+        except SQLAlchemyError as e:
+            raise HTTPException(status_code=500, detail=str(e))
+
+    @staticmethod
+    def list_by_user(user_id: int):
+        try:
+            account_list = db.query(Account).filter_by(user_id=user_id).limit(100).all()
+            return account_list
+        except SQLAlchemyError as e:
             raise HTTPException(status_code=500, detail=str(e))

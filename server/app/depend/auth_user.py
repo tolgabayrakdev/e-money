@@ -16,6 +16,7 @@ async def auth_user(request: Request):
             user = db.query(User).filter(User.id == user_id).first()
             if not user:
                 raise HTTPException(status_code=401, detail="Invalid token")
+            return user
         except jwt.ExpiredSignatureError:
             raise HTTPException(status_code=401, detail="Token has expired")
         except jwt.InvalidTokenError:
