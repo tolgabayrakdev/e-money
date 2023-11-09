@@ -44,7 +44,7 @@ class AccountType(Base):
 class Transaction(Base):
     __tablename__ = "transactions"
     id = Column(Integer, primary_key=True, index=True)
-    source_account_id = Column(Integer, ForeignKey("accounts.id"))
-    target_account_id = Column(Integer, ForeignKey("accounts.id"))
+    source_account_id = Column(UUID(as_uuid=True), ForeignKey("accounts.id"))
+    target_account_id = Column(UUID(as_uuid=True), ForeignKey("accounts.id"))
     amount = Column(Float)
     transaction_date = Column(DateTime, default=datetime.now())
