@@ -19,13 +19,13 @@ async def create_account(
 
 
 @account_router.delete("/{id}")
-async def delete_account(id: int):
+async def delete_account(id: str):
     AccountService.delete(id=id)
     return {"message": "Account deleted successful."}
 
 
 @account_router.get("/{id}")
-async def show_account(id: int):
+async def show_account(id: str):
     return AccountService.show(id)
 
 

@@ -25,7 +25,7 @@ class Role(Base):
 
 class Account(Base):
     __tablename__ = "accounts"
-    id = Column(UUID(as_uuid=True), primary_key=True, index=True, default=uuid.uuid4())
+    id = Column(UUID(as_uuid=True), primary_key=True, index=True, default=uuid.uuid4)
     balance = Column(Float, default=0)
     user_id = Column(Integer, ForeignKey("users.id"))
     account_type_id = Column(Integer, ForeignKey("account_types.id"))
