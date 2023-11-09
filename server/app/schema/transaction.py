@@ -6,5 +6,4 @@ class DepositTransaction(BaseModel):
 
 
 class WithdrawTransaction(BaseModel):
-    source_account_id: int
     amount: float

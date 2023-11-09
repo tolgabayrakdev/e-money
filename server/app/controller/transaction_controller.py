@@ -12,11 +12,14 @@ transaction_router = APIRouter()
 @transaction_router.post("/deposit")
 async def deposit(
         data: DepositTransaction,
-        user: Annotated[User, Depends(auth_user)],
+        user: Annotated[User, Depends(auth_user)]
 ):
     return TransactionService.deposit(data=data, id=user.id)
 
 
 @transaction_router.post("/withdraw")
-async def withdraw(data: WithdrawTransaction):
-    return TransactionService.withdraw(data=data)
+async def withdraw(
+        data: WithdrawTransaction,
+        user: Annotated[User, Depends(auth_user)]
+):
+    return TransactionService.withdraw(data=data, id=user.id)
