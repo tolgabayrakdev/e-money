@@ -8,16 +8,19 @@ function AuthWrapper(WrapperComponent: any) {
         const [loading, setLoading] = useState(true);
         const [sessionExpired, setSessionExpired] = useState(false);
         const [accessDenied, setAccessDenied] = useState(false);
+        const [userInfo, setUserInfo] = useState({})
 
         useEffect(() => {
             const verifyToken = async () => {
                 try {
-                    const res = await fetch("http://127.0.0.1:8000/api/v1/auth/verify", {
+                    const res = await fetch("http://localhost:8000/api/v1/auth/verify", {
                         method: "POST",
                         credentials: "include"
                     });
+                    const data = await res.json();
                     if (res.ok) {
                         setLoggedIn(true);
+                        setUserInfo(data);
                         setLoading(false);
                     }else if (res.status === 401) {
                         setLoading(false);
@@ -44,7 +47,7 @@ function AuthWrapper(WrapperComponent: any) {
         if (sessionExpired) {
             return(<section className="flex h-screen justify-center items-center text-xl">Sorry, your session has expired.</section>)
         }
-        return(<section><WrapperComponent {...props}/> </section>)
+        return(<section><WrapperComponent userInformation={userInfo} {...props}/></section>)
     }
     return Wrapper;
 }

@@ -2,17 +2,21 @@
 import AuthWrapper from "@/util/auth-wrapper";
 
 function HomeLayout({
-  children,
+  userInformation,
+  children
 }: {
-  children: React.ReactNode
+  children: React.ReactNode,
+  userInformation: any
 }) {
+  console.log(userInformation.user);
+  
   return (
-    <html lang="en">
-      <body>
-        <h1 className=" text-4xl">Home Layout!</h1>
-        {children}
-        </body>
-    </html>
+    <section>
+      <h1 className=" text-4xl">Home Layout!</h1>
+      <div className="flex"> Welcome:<p className="text-blue-600">{userInformation.user.username}</p> </div>
+      <div className="flex">Email: <p className="text-blue"> {userInformation.user.email}</p></div>
+      {children}
+    </section>
   )
 }
 
