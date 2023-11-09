@@ -4,6 +4,9 @@ import { FormEvent, useState } from "react"
 
 export default function Home() {
   const [changeVisible, setChangeVisible] = useState(false);
+  const [openFirstSnackbar, setOpenFirstSnackbar] = useState(false);
+  const [openSecondSnackbar, setOpenSecondSnackbar] = useState(false);
+
 
   // Register.
   const [username, setUsername] = useState("");
@@ -11,10 +14,15 @@ export default function Home() {
   const [password, setPassword] = useState("");
 
 
+  // Login.
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+
+
   const handleRegister = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8000/api/v1/register", {
+      const res = await fetch("http://localhost:8000/api/v1/auth/register", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -22,10 +30,37 @@ export default function Home() {
         },
         body: JSON.stringify({ username, email, password })
       })
+      if (res.ok) {
+
+      } else {
+        setOpenFirstSnackbar(true);
+      }
     } catch (error) {
       console.log(error);
+      setOpenFirstSnackbar(true);
     }
+  }
 
+  const handleLogin = async (e: FormEvent) => {
+    e.preventDefault();
+    try {
+      const res = await fetch("http://localhost:8000/api/v1/auth/login", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: loginEmail, password: loginEmail })
+      })
+      if (res.ok) {
+        
+      }else{
+        setOpenSecondSnackbar(true);
+      }
+    } catch (error) {
+      console.log(error);
+      setOpenSecondSnackbar(true);
+    }
   }
 
 
@@ -38,11 +73,11 @@ export default function Home() {
         <div>
           {
             changeVisible ?
-              <form>
+              <form onSubmit={handleLogin}>
                 <div className="flex flex-col">
                   <h4 className="text-center text-blue-600 mb-1">Login here</h4>
-                  <input type="email" name="email" id="email" placeholder="Email" className=" border-2 p-1 rounded-md border-blue-400 mb-1" />
-                  <input type="password" name="password" id="password" placeholder="Password" className=" border-2 p-1 rounded-md border-blue-400" />
+                  <input onChange={(e)=> setLoginEmail(e.target.value)} type="email" name="email" id="email" placeholder="Email" className=" border-2 p-1 rounded-md border-blue-400 mb-1" />
+                  <input onChange={(e)=> setLoginPassword(e.target.value)} type="password" name="password" id="password" placeholder="Password" className=" border-2 p-1 rounded-md border-blue-400" />
                   <Link className=" text-sm mt-1 hover:underline hover:text-gray-800" href="">Forget password ?</Link>
                   <button type="submit" className="border mt-3 rounded-md border-blue-500 p-1 bg-blue-500 text-white">Submit</button>
                 </div>
@@ -52,6 +87,9 @@ export default function Home() {
               <form onSubmit={handleRegister}>
                 <div className="flex flex-col">
                   <h4 className="text-center text-blue-600 mb-1">Register here</h4>
+                  {
+                    openFirstSnackbar ? <p className="text-center text-red-500">Hata!</p> : ""
+                  }
                   <input onChange={(e) => setUsername(e.target.value)} type="text" name="username" id="useranem" placeholder="Username" className=" border-2 p-1 rounded-md border-blue-400 mb-1" />
                   <input onChange={(e) => setEmail(e.target.value)} type="email" name="email" id="email" placeholder="Email" className=" border-2 p-1 rounded-md border-blue-400 mb-1" />
                   <input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="password" placeholder="Password" className=" border-2 p-1 rounded-md border-blue-400" />
