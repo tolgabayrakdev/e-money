@@ -28,6 +28,7 @@ function HomeLayout({
         credentials: "include"
       });
       const data = await res.json();
+      localStorage.setItem("source_account_id", data[0].id);
       setAccounts(data);
     } catch (error) {
       console.log(error);
@@ -45,7 +46,8 @@ function HomeLayout({
         credentials: "include"
       });
       if (res.ok) {
-        router.push("/")
+        localStorage.clear();
+        router.push("/");
       }
     } catch (error) {
       console.log(error);
