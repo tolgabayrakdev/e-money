@@ -3,6 +3,11 @@ import React from 'react'
 
 export default function page() {
     return (
-        <div>Home Page</div>
+        <div>
+            Home page
+            <div className='border mt-3 h-[16rem]'>
+                <h3 className='text-xl mt-1 underline italic'>Transaction History</h3>
+            </div>
+        </div>
     )
 }
