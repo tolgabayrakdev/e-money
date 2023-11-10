@@ -64,8 +64,8 @@ export default function Home() {
       if (res.ok) {
         setTimeout(() => {
           router.push("/home");
+          setLoading(false);
         }, 1000)
-        setLoading(false);
       } else {
         setLoading(false);
         setOpenSecondSnackbar(true);

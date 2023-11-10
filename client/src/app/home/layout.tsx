@@ -1,5 +1,6 @@
 "use client"
 import AuthWrapper from "@/util/auth-wrapper";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type Account = {
@@ -17,6 +18,8 @@ function HomeLayout({
   userInformation: any
 }) {
   const [accounts, setAccounts] = useState<Account[]>([]);
+  const router = useRouter();
+
 
   const handleGetAccounts = async () => {
     try {
@@ -25,18 +28,32 @@ function HomeLayout({
         credentials: "include"
       });
       const data = await res.json();
-      console.log(data);
-
       setAccounts(data);
-
     } catch (error) {
       console.log(error);
     }
   }
-
   useEffect(() => {
     handleGetAccounts();
   }, [])
+
+
+  const handleLogout = async () => {
+    try {
+      const res = await fetch("http://localhost:8000/api/v1/auth/logout",{
+        method: "POST",
+        credentials: "include"
+      });
+      if (res.ok) {
+        router.push("/")
+      }
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+
+
   return (
     <section>
       <header className="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white text-sm py-4 dark:bg-gray-800">
@@ -52,7 +69,7 @@ function HomeLayout({
           </div>
           <div id="navbar-with-collapse" className="hidden basis-full grow sm:block">
             <div className="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5">
-              <a className="font-medium text-gray-600 underline hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">Log out</a>
+              <p onClick={handleLogout} className="font-medium text-gray-600 underline hover:cursor-pointer hover:text-gray-300 dark:text-gray-400 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Log out</p>
             </div>
           </div>
         </nav>
@@ -72,7 +89,7 @@ function HomeLayout({
             accounts.map((account) => (
               <div key={account.id} className="border p-3 rounded-md">
                 <p>id: {account.id} </p>
-                <p>type_id: {account.account_type_id} </p>
+                <p>type_id: {account.account_type_id == 1 ? "personal" : ""} </p>
                 <p>balance: {account.balance} TL </p>
                 <p>created date: {account.created_at} </p>
               </div>

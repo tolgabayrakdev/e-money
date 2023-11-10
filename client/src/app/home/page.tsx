@@ -2,6 +2,9 @@
 import React from 'react'
 
 export default function page() {
+    const handleGetTransaction = async () => {
+
+    }
     return (
         <div>
             Home page
