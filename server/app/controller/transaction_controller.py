@@ -30,3 +30,11 @@ async def transfer(
         user: Annotated[User, Depends(auth_user)]
 ):
     return TransactionService.transfer(data=data, id=user.id)
+
+
+@transaction_router.get("/{source_account_id}")
+async def list_transactions(
+        source_account_id: str,
+        user: Annotated[User, Depends(auth_user)]
+):
+    return TransactionService.list_transaction(source_account_id=source_account_id)

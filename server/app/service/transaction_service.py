@@ -11,9 +11,9 @@ class TransactionService:
 
     # Para yatırma
     @staticmethod
-    def deposit(id: str,  data: DepositTransaction):
+    def deposit(id: str, data: DepositTransaction):
         db.begin()
-        try: 
+        try:
             account = db.query(Account).filter_by(id=data.source_account_id).first()
             if account:
                 account.balance = account.balance + data.amount
@@ -83,3 +83,13 @@ class TransactionService:
             raise HTTPException(status_code=500, detail=str(e))
         finally:
             db.close()
+
+    @staticmethod
+    def list_transaction(source_account_id: str):
+        try:
+            transaction_list = db.query(Transaction).filter_by(source_account_id=source_account_id).limit(30).all()
+            print(transaction_list)
+            if transaction_list:
+                return transaction_list
+        except SQLAlchemyError as e:
+            raise HTTPException(status_code=500, detail=str(e))
