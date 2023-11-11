@@ -1,8 +1,6 @@
-"use client"
-import React from 'react'
+'use client';
+import React from 'react';
 
 export default function page() {
-  return (
-    <div>Deneme page</div>
-  )
+    return <div>Deneme page</div>;
 }
