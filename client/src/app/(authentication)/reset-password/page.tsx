@@ -5,10 +5,8 @@ import React from 'react'
 type Props = {}
 
 export default function ResetPassword({ }: Props) {
-  Button
   return (
     <div>
-
       <Card width="64" bgColor="white" borderColor="teal">
         <form>
           <CardBody>
@@ -26,7 +24,6 @@ export default function ResetPassword({ }: Props) {
           </CardFooter>
         </form>
       </Card>
-
     </div>
   )
 }
