@@ -33,7 +33,6 @@ async def logout(response: Response):
 async def verify_user(request: Request):
     try:
         auth_header = request.cookies.get("access_token") and request.cookies.get("refresh_token")
-        print(auth_header)
         if auth_header is not None:
             decoded_token = jwt.decode(auth_header, "secret_key", algorithms=["HS256"])
             id = decoded_token["payload"]["user_id"]
