@@ -21,3 +21,5 @@ Every user can create accounts and deposit money, withdraw money, check balance 
 2. npm install
 3. npm run dev
 
+
+<img width="900" src="openapi.jpg" />

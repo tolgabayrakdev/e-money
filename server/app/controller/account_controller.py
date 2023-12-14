@@ -10,7 +10,7 @@ from app.schema.user import CurrentUser
 account_router = APIRouter()
 
 
-@account_router.post("/", status_code=201)
+@account_router.post("", status_code=201)
 async def create_account(
         user: Annotated[User, Depends(auth_user)],
         request: CreateAccount
@@ -29,7 +29,7 @@ async def show_account(id: str):
     return AccountService.show(id)
 
 
-@account_router.get("/")
+@account_router.get("")
 async def list_account(
         user: Annotated[User, Depends(auth_user)]
 ):
