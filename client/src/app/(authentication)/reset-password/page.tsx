@@ -2,9 +2,7 @@ import { Button, Card, CardBody, CardFooter, Heading, Input, Stack } from '@chak
 import Link from 'next/link'
 import React from 'react'
 
-type Props = {}
-
-export default function ResetPassword({ }: Props) {
+export default function ResetPassword() {
   return (
     <div>
       <Card width="64" bgColor="white" borderColor="teal">
