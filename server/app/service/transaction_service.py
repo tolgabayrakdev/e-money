@@ -78,7 +78,6 @@ class TransactionService:
                 db.commit()
                 return {"message": f"{transaction.amount} TL transferred to {transaction.target_account_id}."}
         except SQLAlchemyError as e:
-            print(e)
             db.rollback()
             raise HTTPException(status_code=500, detail=str(e))
         finally:
