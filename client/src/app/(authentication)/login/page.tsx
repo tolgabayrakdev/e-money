@@ -83,7 +83,6 @@ export default function Page() {
             :
             <p className="text-xl bg-teal-600 text-white">Loading...</p>
         }
-
       </Card>
     </div>
   )
